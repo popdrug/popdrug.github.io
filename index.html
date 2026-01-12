@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 콘텐츠 스튜디오 | Virtual Influencer Content Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Categories */
+        .categories {
+            background: #f8f9fa;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .category-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .category-tag {
+            padding: 10px 25px;
+            background: white;
+            border-radius: 25px;
+            font-weight: 600;
+            color: #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Solutions Section */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .feature-card p {
+            color: #718096;
+            line-height: 1.8;
+        }
+
+        /* Services Section */
+        .services {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .service-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .service-box h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .service-box h4 {
+            font-size: 1.3rem;
+            margin: 25px 0 15px;
+            opacity: 0.9;
+        }
+
+        .service-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .service-box li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .service-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: #f8f9fa;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            transform: scale(1.05);
+            border: 3px solid #667eea;
+            box-shadow: 0 15px 50px rgba(102,126,234,0.3);
+        }
+
+        .pricing-card.popular::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .pricing-card.popular:hover {
+            transform: translateY(-10px) scale(1.07);
+        }
+
+        .plan-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .plan-description {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .select-plan {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .select-plan:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            background: white;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .portfolio-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .portfolio-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-card p {
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Process Section */
+        .process {
+            background: #2d3748;
+            color: white;
+        }
+
+        .process-timeline {
+            margin-top: 50px;
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 49px;
+            top: 100px;
+            width: 2px;
+            height: calc(100% + 40px);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(102,126,234,0.3);
+        }
+
+        .step-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: #cbd5e0;
+            font-size: 1.1rem;
+        }
+
+        .step-time {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a202c;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+
+            .process-step {
+                grid-template-columns: 1fr;
+            }
+
+            .process-step::after {
+                display: none;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AI 콘텐츠 스튜디오</h1>
+            <p class="subtitle">촬영도, 모델도 필요 없습니다</p>
+            <p class="tagline">한 달 치 콘텐츠와 전략을 한 번에 드리는<br>소상공인 맞춤형 All-in-One 마케팅 솔루션</p>
+            <a href="#contact" class="cta-button">프로젝트 시작하기</a>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <div class="category-tags">
+                <span class="category-tag">패션</span>
+                <span class="category-tag">여행</span>
+                <span class="category-tag">뷰티</span>
+                <span class="category-tag">생활용품</span>
+                <span class="category-tag">F&B</span>
+                <span class="category-tag">액세서리</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">복잡한 콘텐츠 고민,<br>AI 스튜디오가 해결합니다</h2>
+            <p class="section-subtitle">One-Stop Solution</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>동일 인물 AI 모델로<br>일관된 브랜딩</h3>
+                    <p>매번 바뀌는 모델 대신, 우리 브랜드만의 전용 AI 인플루언서가 지속적으로 활동하며 팬덤을 형성합니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>한 달 치 콘텐츠<br>한 번에 제작</h3>
+                    <p>매일 무엇을 올릴지 고민할 필요 없이, 월 단위로 기획된 고퀄리티 SNS/블로그 콘텐츠를 일괄 제공합니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>전략 & 가이드북<br>패키지 제공</h3>
+                    <p>단순 이미지만 드리지 않습니다. 월간 마케팅 전략, 추천 해시태그, 업로드 최적 시간까지 모두 담았습니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>촬영·모델·스튜디오<br>비용 ZERO</h3>
+                    <p>물리적인 촬영 과정이 생략되어 기존 대행사 대비 합리적인 비용으로 고품질 콘텐츠를 확보할 수 있습니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>이슈·트렌드 반영<br>전략형 운영</h3>
+                    <p>계절, 기념일, 최신 밈(Meme) 등 시의성 있는 주제를 놓치지 않고 반영하여 도달율을 극대화합니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>누적 가치 창출<br>IP 자산화</h3>
+                    <p>소비되는 콘텐츠가 아닌, 쌓이는 캐릭터 자산(IP)으로 브랜드 가치를 지속적으로 상승시킵니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services">
+        <div class="container">
+            <h2 class="section-title">Core Services</h2>
+            <p class="section-subtitle">AI 인플루언서 기반 통합 마케팅 솔루션</p>
+
+            <div class="service-box">
+                <h3>🎨 SERVICE A: SNS 콘텐츠 제작</h3>
+                <p>브랜드만의 페르소나를 담은 AI 캐릭터를 생성하여 동일 인물로 지속적인 스토리텔링을 구현합니다.</p>
+                <h4>전달물 구성</h4>
+                <ul>
+                    <li>고해상도 AI 인플루언서 이미지 (1:1 / 4:5 비율)</li>
+                    <li>콘텐츠별 카피라이팅 (감성 문구 + 제품 소구점)</li>
+                    <li>해시태그 가이드 (유입/브랜드)</li>
+                    <li>업로드 추천 시간대 분석</li>
+                    <li>월간 콘텐츠 캘린더 (PDF)</li>
+                </ul>
+            </div>
+
+            <div class="service-box">
+                <h3>📝 SERVICE B: 블로그 콘텐츠</h3>
+                <p>동일한 AI 캐릭터를 블로그 필자로 설정하여 정보성 글과 생생한 후기, 브랜드 스토리를 혼합해 신뢰도를 높입니다.</p>
+                <ul>
+                    <li>블로그 원고 (정보+후기)</li>
+                    <li>전용 썸네일 이미지</li>
+                    <li>검색 키워드 가이드</li>
+                </ul>
+            </div>
+
+            <div class="service-box">
+                <h3>🛍️ SERVICE C: 상세페이지 제작</h3>
+                <p>AI 모델 컷을 활용해 촬영 없이도 고퀄리티 연출이 가능하며, 쇼핑몰/스마트스토어에 최적화된 구성을 제공합니다.</p>
+                <ul>
+                    <li>AI 모델 연출 컷 활용</li>
+                    <li>스토리텔링형 기획</li>
+                    <li>자사몰/스토어 규격 대응</li>
+                </ul>
+            </div>
+
+            <div class="service-box">
+                <h3>🎬 SERVICE D: AI 숏폼 영상</h3>
+                <p>움직이는 AI 인플루언서가 제품을 소개하거나 연출하는 영상을 제작하여 숏폼 알고리즘 노출을 노립니다.</p>
+                <ul>
+                    <li>AI 인플루언서 출연 영상</li>
+                    <li>제품 사용 연출/합성</li>
+                    <li>텍스트 · 자막 · BGM 포함</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing">
+        <div class="container">
+            <h2 class="section-title">합리적인 가격으로<br>AI 마케팅 팀을 구독하세요</h2>
+            <p class="section-subtitle">Monthly Plan</p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="plan-name">Basic</h3>
+                    <p class="plan-description">가볍게 시작하는 인스타 관리</p>
+                    <ul class="plan-features">
+                        <li>주 2회 업로드</li>
+                        <li>월 약 16~18개 피드</li>
+                        <li>인스타그램 채널 집중</li>
+                        <li>기본 월간 캘린더 제공</li>
+                        <li>동일 AI 캐릭터 유지</li>
+                        <li>카피·해시태그 가이드</li>
+                    </ul>
+                    <a href="#contact" class="select-plan">선택하기</a>
+                </div>
+
+                <div class="pricing-card popular">
+                    <h3 class="plan-name">Standard</h3>
+                    <p class="plan-description">가장 추천하는 플랜</p>
+                    <ul class="plan-features">
+                        <li>주 3회 업로드</li>
+                        <li>월 약 24~26개 피드</li>
+                        <li>시즌/이슈 반영 전략 강화</li>
+                        <li>빠른 피드백 및 수정 대응</li>
+                        <li>상세 성과 리포트 포함</li>
+                        <li>동일 AI 캐릭터 유지</li>
+                        <li>카피·해시태그 가이드</li>
+                        <li>월간 전략 요약본</li>
+                    </ul>
+                    <a href="#contact" class="select-plan">선택하기</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="plan-name">Premium</h3>
+                    <p class="plan-description">SNS와 블로그를 한번에</p>
+                    <ul class="plan-features">
+                        <li>Standard 혜택 모두 포함</li>
+                        <li>블로그 운영 추가</li>
+                        <li>네이버/구글 검색 노출 타겟</li>
+                        <li>채널 믹스 마케팅 전략</li>
+                        <li>우선 고객 지원</li>
+                        <li>추가 서비스 할인</li>
+                    </ul>
+                    <a href="#contact" class="select-plan">선택하기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section portfolio">
+        <div class="container">
+            <h2 class="section-title">성공 사례</h2>
+            <p class="section-subtitle">AI 인플루언서를 활용하여 성공적인 브랜딩을 구축한 실제 사례입니다</p>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <span class="portfolio-tag">FASHION</span>
+                    <h3>브랜드 A</h3>
+                    <p>20대 여성 타겟 데일리룩 쇼핑몰</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-value">12.5K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">4.8%</span>
+                            <span class="stat-label">Engagement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="portfolio-tag">BEAUTY</span>
+                    <h3>브랜드 B</h3>
+                    <p>비건 기초 화장품 브랜드</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-value">3,200+</span>
+                            <span class="stat-label">Save</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">450K</span>
+                            <span class="stat-label">Reach</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="portfolio-tag">LIVING</span>
+                    <h3>브랜드 C</h3>
+                    <p>감성 인테리어 소품샵</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-value">↑150%</span>
+                            <span class="stat-label">Sales</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">8.2%</span>
+                            <span class="stat-label">Click</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="portfolio-tag">F&B</span>
+                    <h3>브랜드 D</h3>
+                    <p>프리미엄 디저트 카페</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-value">1.2M</span>
+                            <span class="stat-label">Reels View</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">8.5K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="portfolio-tag">ACCESSORY</span>
+                    <h3>브랜드 E</h3>
+                    <p>핸드메이드 주얼리 브랜드</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-value">450%</span>
+                            <span class="stat-label">ROAS
